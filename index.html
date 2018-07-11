@@ -1,0 +1,360 @@
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>iMdB Data</title>
+<!--Stylesheets-->
+	<link rel="stylesheet" href="index.css">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+</head>
+
+<body class="parent">
+		<!--navbar starts-->
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			  <a class="navbar-brand" href="index.html" id="main-title">iMdB</a>
+			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			    <span class="navbar-toggler-icon"></span>
+			  </button>
+
+			  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			    <ul class="navbar-nav mr-auto">
+			      <li class="nav-item active">
+			        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+			      </li>
+			 
+			      <li class="nav-item dropdown">
+			        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			          Search By
+			        </a>
+			        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			          <a class="dropdown-item" href="#theTitle" id="title">Title</a>
+			          <a class="dropdown-item" href="#theImdbID" id="imdbID">Id</a>
+			          <div class="dropdown-divider"></div>
+			          <a class="dropdown-item" href="#theYear" id="year">Title & Year</a>
+			        </div>
+			      </li>
+			 
+			    </ul>
+			  </div>
+			</nav>
+		<!--navbar ends-->
+
+
+		<!--search bar starts-->
+
+		<div class="myform">
+			<!--search bar for Title starts-->
+			<div class="row inputs">
+		      <div class="col-12 col-md-4 inputElements">
+		      	<input class="form-control mr-sm-2" type="search" placeholder="Enter Title" aria-label="Search" id="inputTitle">
+		      </div>
+		      <div class="col">
+		      	<button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="searchByTitle" onclick="move()">Search</button>
+		      </div>
+		    </div>
+		    <!--search bar for Title ends-->
+
+			<!--search bar for ID starts-->
+			<div class="row inputs">
+		      <div class="col-12 col-md-4 inputElements">
+		      	<input class="form-control mr-sm-2" type="search" placeholder="Enter ID" aria-label="Search" id="inputID">
+		      </div>
+		      <div class="col">
+		      	<button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="searchByID" onclick="move()">Search</button>
+		    	</div>
+		    </div>
+		    <!--search bar for ID ends-->
+		    
+		    <!--search bar for Year starts-->
+			<!--<form class="form-inline my-2 my-lg-0">-->
+			<div class="row inputs">
+		      	<div class="col-12 col-md-4 inputElements">
+		      		<input class="form-control mr-sm-2" type="search" placeholder="Enter Title" aria-label="Search" id="inputYear1">
+		  		</div>
+			    <div class="col-12 col-md-4 inputElements">
+			      	<input class="form-control mr-sm-2" type="search" placeholder="Enter Year" aria-label="Search" id="inputYear2">
+			    </div>
+		      <div class="col">
+		      	<button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="searchByTitleNYear" onclick="move()">Search</button>
+		      </div>
+		    </div>
+		    <!--</form>-->
+		    <!--search bar for Year ends-->
+		</div>
+
+		<!--search bar ends-->
+
+
+		<!--progress bar starts-->
+
+		<div class="loader">
+			<img src="ajax-loader.gif" id="loadGIF">
+		</div>
+
+		<!--progress bar ends-->
+
+
+
+
+		<!--Main Div starts-->
+		<div class="container main-div bg-dark">
+			<!--Image & Title & Released row starts-->
+			<div class="row mobile" style="height:40%;margin:3%;font-family:cursive;">
+				<div class="col-4 col-md-4">
+					<img src="dummy.jpg" id="moviePoster"  onerror="this.src='dummy.jpg'";>
+				</div>
+				<div class="col-2 col-md-2">
+					
+				</div>
+				<div class="col-6 col-md-6">
+					<div class="row movie-name">
+						<div class="col-12 col-md-12" id="movieTitle">Title</div>
+					</div>
+					<div class="row release-date">
+						<div class="col-12 col-md-12" id="movieReleased">Released</div>
+					</div>
+				</div>
+			</div>
+			<!--Image & Title & Released row ends-->
+			<div><hr></div>
+			<!--Movie Content row starts-->
+
+			<div class="row" style="padding:1%;padding-top:4%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>imdbID&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieID">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Year&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieYear">
+				</div>
+			</div>
+			<div class="row" style="padding:1%;text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Language&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieLanguage">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Rated&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieRated">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Runtime&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieRuntime">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Genre&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieGenre">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Director&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieDirector">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Writer&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieWriter">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Actors&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieActor">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Plot&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="moviePlot">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Country&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieCountry">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Awards&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieAwards">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Ratings&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieRatings">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Metascore&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieMetascore">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>imdbRating&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieImdbRating">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>imdbVotes&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieImdbVotes">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Type&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieType">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>DVD&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieDVD">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>BoxOffice&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieBoxOffice">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Production&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieProduction">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Website&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieWebsite">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-3 col-md-3 heading">
+					<b>Response&nbsp;:</b>
+				</div>
+				<div class="col-9 col-md-9 content" id="movieResponse">
+				</div>
+			</div>
+			<div class="row" style="padding:1%; text-align:center;">
+				<div class="col-12 col-md-12" style="height:10%;">
+				</div>
+			</div>
+			<!--Movie Content row ends-->
+
+		</div>
+		<!--Main Div ends-->
+
+
+		<!--Home Page div starts-->
+			<div class="container-full intro-div">
+				<div style="text-align:center;"><h1>Heya User !</h1></div>
+				<div style="text-align:center;"><h3>Welcome to iMdB...</h3><img src="icon.jpg" style="border-radius:50%;"></div>
+				<div><p>We are glad to serve you with the best information related to every single movie.This platform is developed to provide you with all the necessary details related to the movies you want to know about. You are free to choose any of the given three options that includes Search By Title or By ID or By Title & Year.
+				</p></div>
+			</div>
+		<!--Home Page div starts-->
+
+
+
+		<footer class="footer" style="background-color:white;">
+	        <div class="container text-center">
+	            <span class="text-muted">&copy; Copyright 2018. All Rights Reserved.</span>
+	        </div>
+	    </footer>
+
+
+
+	  				<!--Modal for Movie not found-->
+
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalCenterTitle">Oops ! No such movie exists.</h5>
+							        <button type="button" class="close modalbtn" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							        <img src="sad.png" style="padding-left:10%; height:20%">
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary modalbtn" data-dismiss="modal">Close</button>
+							        <button type="button" class="btn btn-primary modalbtn">Save changes</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+		    
+
+
+				
+
+
+	    <script>
+			/*Progress Bar Animation*/
+			function move() {
+			    var elem = document.getElementById("myBar"); 
+			    var width = 1;
+			    var id = setInterval(frame, 15);
+			    function frame() {
+			        if (width >= 100) {
+			            clearInterval(id);
+			        } else {
+			            width++; 
+			            elem.style.width = width + '%'; 
+			        }
+			    }
+			}
+	    </script>
+
+		<script src="jquery-3.3.1.min.js"></script>
+		<script src="index.js"></script>
+
+		<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+</body>
+</html>
